@@ -3,5 +3,7 @@
         <file>picture/background.png</file>
         <file>picture/left.png</file>
         <file>picture/right.png</file>
+        <file>picture/day.png</file>
+        <file>picture/night.png</file>
     </qresource>
 </RCC>

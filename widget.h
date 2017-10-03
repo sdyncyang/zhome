@@ -20,6 +20,7 @@ private:
 
 private slots:
     void showTime();
+    void showWeahter();
 };
 
 #endif // WIDGET_H
