@@ -15,13 +15,14 @@ TEMPLATE = app
 SOURCES += main.cpp\
         widget.cpp \
     sunraise.cpp \
-    myinfo.cpp
-
+    myinfo.cpp \
+    formsetting.cpp
 HEADERS  += widget.h \
     sunraise.h \
-    myinfo.h
-
-FORMS    += widget.ui
+    myinfo.h \
+    formsetting.h
+FORMS    += widget.ui \
+    formsetting.ui
 
 target.path = /home/qt_project
 INSTALLS += target

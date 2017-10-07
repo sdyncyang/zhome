@@ -1,5 +1,6 @@
 #include "widget.h"
 #include "ui_widget.h"
+#include "ui_setting.h"
 #include <QTime>
 #include <QTimer>
 #include <QDebug>
@@ -7,6 +8,9 @@
 #include <QToolButton>
 #include <sunraise.h>
 #include <myinfo.h>
+#include <QFile>
+#include<QFileInfo>
+#include <formsetting.h>
 
 /*myinfo setup*/
  myinfo *zaddinfo = new myinfo();
@@ -112,9 +116,26 @@ void Widget::showTime()
 //       ui->lcdNumber_2->setLineWidth(0);
 //       ui->lcdNumber_2->setPalette(pal);
 //       ui->lcdNumber_2->display (date_str);     //显示LCD文字
+
+       /*read system temp*/
+//       QFile file("/sys/class/thermal/thermal_zone0/temp");
+//       if(!file.open(QIODevice::ReadOnly| QIODevice::Text))
+//        {
+//            qDebug()<<file.errorString();
+//        }
+//      ui->label_systemp->setText(file.readAll());
+//      file.close();
+
 }
 
 void Widget::showWeahter()
 {
 
+}
+
+void Widget::on_pushButton_clicked()
+{
+    qDebug()<<"clicked";
+    FormSetting *w2 = new FormSetting();
+    w2->show();
 }
