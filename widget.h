@@ -17,11 +17,13 @@ public:
 
 private:
     Ui::Widget *ui;
-
+    void showWeahter();
+    void showWifiSignal();
 private slots:
     void showTime();
-    void showWeahter();
+
     void on_pushButton_clicked();
+    void on_wifiPushButton_clicked();
 };
 
 #endif // WIDGET_H

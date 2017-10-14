@@ -10,8 +10,10 @@ FormSetting::FormSetting(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setGeometry(270,0,760,600);
+    ui->backButton->setStyleSheet("border-image: url(:/picture/Back.png);outline: none;");
+
 //    this->setStyleSheet("QWidget{border: 0px;background-image: url(:/picture/day.png);}");
-    ui->backButton->setGeometry(30,30,100,30);
+//    ui->backButton->setGeometry(30,30,100,30);
     temptimer= new QTimer(this);
     connect(temptimer,SIGNAL(timeout()),this,SLOT(updateTemp()));
     temptimer->start (5000);        //每1000ms刷新一次，即1秒

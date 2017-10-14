@@ -16,13 +16,16 @@ SOURCES += main.cpp\
         widget.cpp \
     sunraise.cpp \
     myinfo.cpp \
-    formsetting.cpp
+    formsetting.cpp \
+    formwifisetting.cpp
 HEADERS  += widget.h \
     sunraise.h \
     myinfo.h \
-    formsetting.h
+    formsetting.h \
+    formwifisetting.h
 FORMS    += widget.ui \
-    formsetting.ui
+    formsetting.ui \
+    formwifisetting.ui
 
 target.path = /home/qt_project
 INSTALLS += target

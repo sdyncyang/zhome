@@ -5,5 +5,11 @@
         <file>picture/right.png</file>
         <file>picture/day.png</file>
         <file>picture/night.png</file>
+        <file>picture/WirelessIcon.png</file>
+        <file>picture/WirelessIcon1.png</file>
+        <file>picture/WirelessIcon2.png</file>
+        <file>picture/WirelessIcon3.png</file>
+        <file>picture/WirelessIcon4.png</file>
+        <file>picture/Back.png</file>
     </qresource>
 </RCC>
