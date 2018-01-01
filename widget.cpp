@@ -13,12 +13,18 @@
 #include <formsetting.h>
 //#include <QRegExp>
 #include <formwifisetting.h>
-#define wifiSignalUpdateTime 5
+#include <QNetworkReply>
+#include <QNetworkRequest>
+#include <QJsonObject>
+#include <QJsonDocument>
+#include <QJsonParseError>
 
+#define wifiSignalUpdateTime 5
+#define weatherUpdateTime 1000*60
 /*myinfo setup*/
  myinfo *zaddinfo = new myinfo();
  int wifiCount = 0 ;
-
+ QNetworkAccessManager *m_accessManager_weatherdate;
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Widget)
@@ -26,6 +32,8 @@ Widget::Widget(QWidget *parent) :
     ui->setupUi(this);
     this->setAutoFillBackground(true);
     QPalette palette;
+    m_accessManager_weatherdate = new QNetworkAccessManager(this);
+    connect(m_accessManager_weatherdate,SIGNAL(finished(QNetworkReply*)),this,SLOT(finishedSlot(QNetworkReply*)));
     palette.setBrush(QPalette::Background,QBrush(QPixmap(":/picture/background.png")));
     this->setPalette(palette);
     this->setWindowFlags(Qt::FramelessWindowHint);
@@ -50,15 +58,22 @@ Widget::Widget(QWidget *parent) :
 //          pMonthButton->setIcon(iPrecon);
 //        }
 
-
-
+     /*clear weather date background*/
+  ui->CityTextEdit->setAttribute(Qt::WA_TranslucentBackground, true);
+  ui->DaytemptextEdit->setAttribute(Qt::WA_TranslucentBackground, true);
+  ui->NighttemptextEdit->setAttribute(Qt::WA_TranslucentBackground, true);
+  ui->weathertextEdit->setAttribute(Qt::WA_TranslucentBackground, true);
 
 
     /*show time and date*/
     QTimer * timer = new QTimer(this);
+    QTimer * timerweather = new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(showTime()));
+    connect(timerweather,SIGNAL(timeout()),this,SLOT(showWeahter()));
     timer->start (1000);        //每1000ms刷新一次，即1秒
+    timerweather->start(weatherUpdateTime);
     showTime();
+    showWeahter();
     showWifiSignal();
 
 
@@ -67,6 +82,7 @@ Widget::Widget(QWidget *parent) :
 Widget::~Widget()
 {
     delete ui;
+    delete m_accessManager_weatherdate;
 }
 void Widget::showTime()
 {
@@ -140,14 +156,16 @@ void Widget::showTime()
 
 void Widget::showWeahter()
 {
-
+    QNetworkRequest request;
+    request.setUrl(QUrl("http://www.for-maker.com/weather"));
+    m_accessManager_weatherdate->get(request);
 }
 
 
 void Widget::showWifiSignal()
 {
 
-    system("iwconfig wlan0 | grep \"Link Quality\" > ./tempWifiSignal");
+    system("iwconfig wlan0 | grep \"Link Quality\" > /home/qt_project/tempWifiSignal");
     QFile file("/home/qt_project/tempWifiSignal");
     if(!file.open(QIODevice::ReadOnly| QIODevice::Text))
        {
@@ -197,4 +215,76 @@ void Widget::on_wifiPushButton_clicked()
     FormWifiSetting *wifiWindown = new FormWifiSetting();
     wifiWindown->show();
 
+}
+
+void Widget::finishedSlot(QNetworkReply* reply)
+{
+    if (reply->error() == QNetworkReply::NoError)
+         {
+             QByteArray weatherBytes = reply->readAll();
+             //QString weather_string = QString::fromUtf8(bytes);
+             //ui->textBrowser->setText(string.toUtf8());
+             QJsonParseError jsonError;
+             QJsonDocument parseDoc = QJsonDocument::fromJson(weatherBytes,&jsonError);
+             if(jsonError.error == QJsonParseError::NoError)
+             {
+                 if(parseDoc.isObject())
+                   {
+                     QJsonObject jsonObj = parseDoc.object();
+                     if(jsonObj.contains("city"))
+                        {
+                          QJsonValue typeValue = jsonObj.take("city");
+                          if(typeValue.isString())
+                          {
+                          QString strValue= typeValue.toString();
+                          ui->CityTextEdit->setAttribute(Qt::WA_TranslucentBackground, true);
+                          ui->CityTextEdit->setText(strValue);
+                         }
+                        }
+                     if(jsonObj.contains("day_temp"))
+                        {
+                          QJsonValue typeValue = jsonObj.take("day_temp");
+                          if(typeValue.isString())
+                          {
+                          QString strValue= typeValue.toString();
+                          ui->DaytemptextEdit->setAttribute(Qt::WA_TranslucentBackground, true);
+                          ui->DaytemptextEdit->setText("白天温度:"+strValue);
+                         }
+                        }
+                     if(jsonObj.contains("night_temp"))
+                        {
+                          QJsonValue typeValue = jsonObj.take("night_temp");
+                          if(typeValue.isString())
+                          {
+                          QString strValue= typeValue.toString();
+                          ui->NighttemptextEdit->setAttribute(Qt::WA_TranslucentBackground, true);
+                          ui->NighttemptextEdit->setText("夜晚温度:"+strValue);
+                         }
+                        }
+                     if(jsonObj.contains("weather"))
+                        {
+                          QJsonValue typeValue = jsonObj.take("weather");
+                          if(typeValue.isString())
+                          {
+                          QString strValue= typeValue.toString();
+                          ui->weathertextEdit->setAttribute(Qt::WA_TranslucentBackground, true);
+                          ui->weathertextEdit->setText(strValue);
+                         }
+                        }
+                 }
+             }
+             else
+             {
+                qDebug()<<"json error";
+             }
+         }
+         else
+         {
+             qDebug()<<"handle errors here";
+             QVariant statusCodeV = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute);
+             //statusCodeV是HTTP服务器的相应码，reply->error()是Qt定义的错误码，可以参考QT的文档
+             qDebug( "found error ....code: %d %d\n", statusCodeV.toInt(), (int)reply->error());
+             qDebug(qPrintable(reply->errorString()));
+         }
+         reply->deleteLater();
 }

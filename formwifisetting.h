@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include <QString>
+#include<keyboard/widgetKeyBoard.h>
+#include <mylineedit.h>
 namespace Ui {
 class FormWifiSetting;
 }
@@ -22,6 +24,7 @@ private slots:
 
 private:
     Ui::FormWifiSetting *ui;
+    MyLineEdit *lineEdit1;
     void showConnectWifi();
     void listScanResult();
 };

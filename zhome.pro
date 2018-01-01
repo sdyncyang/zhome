@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT += multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -17,12 +18,18 @@ SOURCES += main.cpp\
     sunraise.cpp \
     myinfo.cpp \
     formsetting.cpp \
-    formwifisetting.cpp
+    formwifisetting.cpp \
+    keyboard/QKeyPushButton.cpp \
+    keyboard/widgetKeyBoard.cpp \
+    mylineedit.cpp
 HEADERS  += widget.h \
     sunraise.h \
     myinfo.h \
     formsetting.h \
-    formwifisetting.h
+    formwifisetting.h \
+    keyboard/QKeyPushButton.h \
+    keyboard/widgetKeyBoard.h \
+    mylineedit.h
 FORMS    += widget.ui \
     formsetting.ui \
     formwifisetting.ui

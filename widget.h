@@ -2,7 +2,7 @@
 #define WIDGET_H
 
 #include <QWidget>
-
+#include<QNetworkReply>
 namespace Ui {
 class Widget;
 }
@@ -17,11 +17,11 @@ public:
 
 private:
     Ui::Widget *ui;
-    void showWeahter();
     void showWifiSignal();
 private slots:
     void showTime();
-
+    void showWeahter();
+    void finishedSlot(QNetworkReply *reply);
     void on_pushButton_clicked();
     void on_wifiPushButton_clicked();
 };

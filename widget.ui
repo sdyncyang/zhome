@@ -78,6 +78,64 @@ QCalendarWidget QWidget#qt_calendar_yearbutton{
    <property name="frameShadow">
     <enum>QFrame::Raised</enum>
    </property>
+   <widget class="QTextEdit" name="CityTextEdit">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>30</y>
+      <width>104</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);
+background-color: rgba(00, 00, 00, 0);
+</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="DaytemptextEdit">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>80</y>
+      <width>241</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);
+background-color: rgba(255, 255, 255, 0);
+</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="NighttemptextEdit">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>130</y>
+      <width>241</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);
+background-color: rgba(255, 255, 255, 0);</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="weathertextEdit">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>180</y>
+      <width>241</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);
+background-color: rgba(255, 255, 255, 0);</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QLabel" name="label_2">
    <property name="geometry">
@@ -121,10 +179,10 @@ outline: none;</string>
   <widget class="QPushButton" name="wifiPushButton">
    <property name="geometry">
     <rect>
-     <x>920</x>
+     <x>879</x>
      <y>90</y>
-     <width>30</width>
-     <height>21</height>
+     <width>71</width>
+     <height>51</height>
     </rect>
    </property>
    <property name="text">

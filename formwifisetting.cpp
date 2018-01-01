@@ -4,7 +4,9 @@
 #include <QDebug>
 #include <QString>
 #include <QRegExp>
-
+#include <mylineedit.h>
+#include <QGridLayout>
+#include <QLineEdit>
 FormWifiSetting::FormWifiSetting(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::FormWifiSetting)
@@ -14,9 +16,20 @@ FormWifiSetting::FormWifiSetting(QWidget *parent) :
     //ui->scrollArea->setFrameShape(QFrame::NoFrame);
     ui->label_2->hide();
     ui->wifissidLabel->hide();
-    ui->wifipassword->hide();
+//    ui->wifipassword->hide();
+   lineEdit1=new MyLineEdit(this);
+   lineEdit1->setGeometry(400,150,300,50);
+   lineEdit1->hide();
+//   MyLineEdit lineEdit2=new MyLineEdit(this);
+//   QGridLayout gridLayout=new QGridLayout;
+//         gridLayout->addWidget(lineEdit1,0,0);
+//         gridLayout->addWidget(lineEdit2,1,0);
+//         setLayout(gridLayout);
+
+
     showConnectWifi();
     listScanResult();
+
 //    QFile file("/home/pi/wifiScanTemp");
 //    if(!file.open(QIODevice::ReadOnly| QIODevice::Text))
 //       {
@@ -103,7 +116,9 @@ void FormWifiSetting::on_listWidget_clicked(const QModelIndex &index)
 //    qDebug()<<ui->listWidget->item(index.row())->text();
       ui->wifissidLabel->show();
       ui->label_2->show();
-      ui->wifipassword->show();
+//      ui->wifipassword->show();
       ui->wifissidLabel->setText(ui->listWidget->item(index.row())->text());
-
+      lineEdit1->show();
+      lineEdit1->setText("");
 }
+

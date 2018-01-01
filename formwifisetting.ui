@@ -101,8 +101,8 @@ color: rgb(255, 255, 255);</string>
     <rect>
      <x>390</x>
      <y>90</y>
-     <width>91</width>
-     <height>31</height>
+     <width>90</width>
+     <height>30</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -118,8 +118,8 @@ font: 8pt &quot;Sans&quot;;</string>
     <rect>
      <x>500</x>
      <y>90</y>
-     <width>161</width>
-     <height>31</height>
+     <width>160</width>
+     <height>30</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -128,16 +128,6 @@ font: 8pt &quot;Sans&quot;;</string>
    </property>
    <property name="text">
     <string/>
-   </property>
-  </widget>
-  <widget class="QTextEdit" name="wifipassword">
-   <property name="geometry">
-    <rect>
-     <x>380</x>
-     <y>140</y>
-     <width>291</width>
-     <height>41</height>
-    </rect>
    </property>
   </widget>
  </widget>
