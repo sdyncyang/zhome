@@ -11,5 +11,40 @@
         <file>picture/WirelessIcon3.png</file>
         <file>picture/WirelessIcon4.png</file>
         <file>picture/Back.png</file>
+        <file>picture/weather/00.png</file>
+        <file>picture/weather/01.png</file>
+        <file>picture/weather/02.png</file>
+        <file>picture/weather/03.png</file>
+        <file>picture/weather/04.png</file>
+        <file>picture/weather/05.png</file>
+        <file>picture/weather/06.png</file>
+        <file>picture/weather/07.png</file>
+        <file>picture/weather/08.png</file>
+        <file>picture/weather/09.png</file>
+        <file>picture/weather/10.png</file>
+        <file>picture/weather/11.png</file>
+        <file>picture/weather/12.png</file>
+        <file>picture/weather/13.png</file>
+        <file>picture/weather/14.png</file>
+        <file>picture/weather/15.png</file>
+        <file>picture/weather/16.png</file>
+        <file>picture/weather/17.png</file>
+        <file>picture/weather/18.png</file>
+        <file>picture/weather/19.png</file>
+        <file>picture/weather/20.png</file>
+        <file>picture/weather/21.png</file>
+        <file>picture/weather/22.png</file>
+        <file>picture/weather/23.png</file>
+        <file>picture/weather/24.png</file>
+        <file>picture/weather/25.png</file>
+        <file>picture/weather/26.png</file>
+        <file>picture/weather/27.png</file>
+        <file>picture/weather/28.png</file>
+        <file>picture/weather/29.png</file>
+        <file>picture/weather/30.png</file>
+        <file>picture/weather/31.png</file>
+        <file>picture/weather/53.png</file>
+        <file>picture/weather/301.png</file>
+        <file>picture/weather/302.png</file>
     </qresource>
 </RCC>

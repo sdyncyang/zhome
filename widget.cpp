@@ -18,9 +18,10 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QJsonParseError>
+#include <QPainter>
 
 #define wifiSignalUpdateTime 5
-#define weatherUpdateTime 1000*60
+#define weatherUpdateTime 1000*60*10
 /*myinfo setup*/
  myinfo *zaddinfo = new myinfo();
  int wifiCount = 0 ;
@@ -63,8 +64,8 @@ Widget::Widget(QWidget *parent) :
   ui->DaytemptextEdit->setAttribute(Qt::WA_TranslucentBackground, true);
   ui->NighttemptextEdit->setAttribute(Qt::WA_TranslucentBackground, true);
   ui->weathertextEdit->setAttribute(Qt::WA_TranslucentBackground, true);
-
-
+  ui->weatherView->hide();
+//  ui->weatherView->setAttribute(Qt::WA_TranslucentBackground, true);
     /*show time and date*/
     QTimer * timer = new QTimer(this);
     QTimer * timerweather = new QTimer(this);
@@ -237,7 +238,6 @@ void Widget::finishedSlot(QNetworkReply* reply)
                           if(typeValue.isString())
                           {
                           QString strValue= typeValue.toString();
-                          ui->CityTextEdit->setAttribute(Qt::WA_TranslucentBackground, true);
                           ui->CityTextEdit->setText(strValue);
                          }
                         }
@@ -247,7 +247,6 @@ void Widget::finishedSlot(QNetworkReply* reply)
                           if(typeValue.isString())
                           {
                           QString strValue= typeValue.toString();
-                          ui->DaytemptextEdit->setAttribute(Qt::WA_TranslucentBackground, true);
                           ui->DaytemptextEdit->setText("白天温度:"+strValue);
                          }
                         }
@@ -257,18 +256,26 @@ void Widget::finishedSlot(QNetworkReply* reply)
                           if(typeValue.isString())
                           {
                           QString strValue= typeValue.toString();
-                          ui->NighttemptextEdit->setAttribute(Qt::WA_TranslucentBackground, true);
                           ui->NighttemptextEdit->setText("夜晚温度:"+strValue);
                          }
                         }
-                     if(jsonObj.contains("weather"))
+                     if(jsonObj.contains("next_weather"))
                         {
-                          QJsonValue typeValue = jsonObj.take("weather");
+                          QJsonValue typeValue = jsonObj.take("next_weather");
                           if(typeValue.isString())
                           {
                           QString strValue= typeValue.toString();
-                          ui->weathertextEdit->setAttribute(Qt::WA_TranslucentBackground, true);
-                          ui->weathertextEdit->setText(strValue);
+                          ui->weathertextEdit->setText("明日天气:"+strValue);
+                         }
+                        }
+                     if(jsonObj.contains("now_weather_code"))
+                        {
+                          QJsonValue typeValue = jsonObj.take("now_weather_code");
+                          if(typeValue.isString())
+                          {
+                          QString strValue= typeValue.toString();
+                          ui->weatherView->setStyleSheet("background-image: url(:/picture/weather/"+strValue+".png);outline: none;");
+                          ui->weatherView->show();
                          }
                         }
                  }
