@@ -11,6 +11,18 @@ FormSetting::FormSetting(QWidget *parent) :
     ui->setupUi(this);
     this->setGeometry(270,0,760,600);
     ui->backButton->setStyleSheet("border-image: url(:/picture/Back.png);outline: none;");
+    int status=255;
+    status = system("ifconfig wlan0 | grep \"inet addr\"|sed 's/^.*addr://g'|sed 's/Bcast.*$//g'> /home/qt_project/wifiaddressTemp");
+    if(status == 0)
+    {
+    QFile templinkedfile("/home/qt_project/wifiaddressTemp");
+    if(!templinkedfile.open(QIODevice::ReadOnly| QIODevice::Text))
+       {
+         qDebug()<<templinkedfile.errorString();
+       }
+    QString wifiaddress = templinkedfile.readAll();
+    ui->label_wifiaddress->setText(wifiaddress);
+    }
 
 //    this->setStyleSheet("QWidget{border: 0px;background-image: url(:/picture/day.png);}");
 //    ui->backButton->setGeometry(30,30,100,30);

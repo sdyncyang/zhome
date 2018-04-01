@@ -21,6 +21,7 @@
 #include <QPainter>
 
 #define wifiSignalUpdateTime 5
+#define roomTempUpdateTime 1000*30
 #define weatherUpdateTime 1000*60*10
 /*myinfo setup*/
  myinfo *zaddinfo = new myinfo();
@@ -60,22 +61,27 @@ Widget::Widget(QWidget *parent) :
 //        }
 
      /*clear weather date background*/
-  ui->CityTextEdit->setAttribute(Qt::WA_TranslucentBackground, true);
-  ui->DaytemptextEdit->setAttribute(Qt::WA_TranslucentBackground, true);
-  ui->NighttemptextEdit->setAttribute(Qt::WA_TranslucentBackground, true);
-  ui->weathertextEdit->setAttribute(Qt::WA_TranslucentBackground, true);
+  ui->label_city->setAttribute(Qt::WA_TranslucentBackground, true);
+  ui->label_daytemp->setAttribute(Qt::WA_TranslucentBackground, true);
+  ui->label_nighttemp->setAttribute(Qt::WA_TranslucentBackground, true);
+  ui->label_nextweather->setAttribute(Qt::WA_TranslucentBackground, true);
+  ui->label_roomtemp->setAttribute(Qt::WA_TranslucentBackground,true);
   ui->weatherView->hide();
 //  ui->weatherView->setAttribute(Qt::WA_TranslucentBackground, true);
     /*show time and date*/
     QTimer * timer = new QTimer(this);
     QTimer * timerweather = new QTimer(this);
+    QTimer * timerRoomTemp = new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(showTime()));
     connect(timerweather,SIGNAL(timeout()),this,SLOT(showWeahter()));
+    connect(timerRoomTemp,SIGNAL(timeout()),this,SLOT(updateRoomTemp()));
     timer->start (1000);        //每1000ms刷新一次，即1秒
     timerweather->start(weatherUpdateTime);
+    timerRoomTemp->start(roomTempUpdateTime);
     showTime();
     showWeahter();
     showWifiSignal();
+    updateRoomTemp();
 
 
 }
@@ -85,6 +91,26 @@ Widget::~Widget()
     delete ui;
     delete m_accessManager_weatherdate;
 }
+void Widget::updateRoomTemp()
+{
+    QFile file("/home/software/temp_record");
+    if(!file.open(QIODevice::ReadOnly| QIODevice::Text))
+       {
+          qDebug()<<file.errorString();
+       }
+    QString roomTemp = file.readAll();
+    if (roomTemp != "")
+    {
+        ui->label_roomtemp->setText(roomTemp);
+    }
+    else
+    {
+        ;
+    }
+    file.close();
+
+}
+
 void Widget::showTime()
 {
         QPalette pal;
@@ -158,7 +184,7 @@ void Widget::showTime()
 void Widget::showWeahter()
 {
     QNetworkRequest request;
-    request.setUrl(QUrl("http://www.for-maker.com/weather"));
+    request.setUrl(QUrl("http://www.for-maker.com/weather/"));
     m_accessManager_weatherdate->get(request);
 }
 
@@ -201,12 +227,12 @@ void Widget::showWifiSignal()
             {
                ui->wifiPushButton->setStyleSheet("border-image: url(:/picture/WirelessIcon4.png);outline: none;");
             }
-
+    file.close();
 
 }
 void Widget::on_pushButton_clicked()
 {
-    qDebug()<<"clicked";
+    //qDebug()<<"clicked";
     FormSetting *w2 = new FormSetting();
     w2->show();
 }
@@ -238,7 +264,7 @@ void Widget::finishedSlot(QNetworkReply* reply)
                           if(typeValue.isString())
                           {
                           QString strValue= typeValue.toString();
-                          ui->CityTextEdit->setText(strValue);
+                          ui->label_city->setText(strValue);
                          }
                         }
                      if(jsonObj.contains("day_temp"))
@@ -247,7 +273,7 @@ void Widget::finishedSlot(QNetworkReply* reply)
                           if(typeValue.isString())
                           {
                           QString strValue= typeValue.toString();
-                          ui->DaytemptextEdit->setText("白天温度:"+strValue);
+                          ui->label_daytemp->setText("白天温度:"+strValue);
                          }
                         }
                      if(jsonObj.contains("night_temp"))
@@ -256,7 +282,7 @@ void Widget::finishedSlot(QNetworkReply* reply)
                           if(typeValue.isString())
                           {
                           QString strValue= typeValue.toString();
-                          ui->NighttemptextEdit->setText("夜晚温度:"+strValue);
+                          ui->label_nighttemp->setText("夜晚温度:"+strValue);
                          }
                         }
                      if(jsonObj.contains("next_weather"))
@@ -265,7 +291,7 @@ void Widget::finishedSlot(QNetworkReply* reply)
                           if(typeValue.isString())
                           {
                           QString strValue= typeValue.toString();
-                          ui->weathertextEdit->setText("明日天气:"+strValue);
+                          ui->label_nextweather->setText("明日天气:"+strValue);
                          }
                         }
                      if(jsonObj.contains("now_weather_code"))

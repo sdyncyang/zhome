@@ -24,6 +24,7 @@ private slots:
     void finishedSlot(QNetworkReply *reply);
     void on_pushButton_clicked();
     void on_wifiPushButton_clicked();
+    void updateRoomTemp();
 };
 
 #endif // WIDGET_H
